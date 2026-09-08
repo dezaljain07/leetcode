@@ -1,0 +1,31 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int calPoints(String[] operations) {
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (String op : operations) {
+            if (op.equals("+")) {
+                int last = stack.pop();
+                int secondLast = stack.peek();
+                
+                stack.push(last);
+                stack.push(last + secondLast);
+            } else if (op.equals("D")) {
+                stack.push(stack.peek() * 2);
+            } else if (op.equals("C")) {
+                stack.pop();
+            } else {
+                stack.push(Integer.parseInt(op));
+            }
+        }
+
+        int total = 0;
+        for (int num : stack) {
+            total += num;
+        }
+
+        return total;
+    }
+}
